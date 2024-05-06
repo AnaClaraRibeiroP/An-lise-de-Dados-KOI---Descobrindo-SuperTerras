@@ -1,0 +1,29 @@
+import pandas as pd
+
+# Dicionário para mapear os nomes dos arquivos CSV para as datas correspondentes
+file_dates = {
+    "q1_q6_koi_2024.05.05_17.47.48.csv": "Feb 12, 2013",
+    "q1_q8_koi_2024.05.05_17.47.53.csv": "Jan. 7, 2014",
+    "q1_q12_koi_2024.05.05_17.47.58.csv": "Dec. 4, 2014",
+    "q1_q16_koi_2024.05.05_17.48.02.csv": "Dec. 18, 2014",
+    "q1_q17_dr24_koi_2024.05.05_17.48.07.csv": "Sept. 24, 2015",
+    "q1_q17_dr25_koi_2024.05.05_17.48.13.csv": "Aug. 31, 2017",
+    "q1_q17_dr25_sup_koi_2024.05.05_17.48.20.csv": "Sept. 27, 2018",
+    "cumulative_2024.05.05_17.48.25.csv": "Sept. 27, 2018"
+}
+
+# Lista para armazenar os DataFrames lidos de cada arquivo CSV
+dfs = []
+
+# Ler e processar cada arquivo CSV
+for file, date in file_dates.items():
+    df = pd.read_csv(f"c:\\Users\\aclarari\\Desktop\\{file}")
+    # Adicionar a coluna de data com base no nome do arquivo
+    df['Date'] = pd.to_datetime(date).strftime("%d/%m/%Y")
+    dfs.append(df)
+
+# Concatenar todos os DataFrames em um único DataFrame
+combined_df = pd.concat(dfs, ignore_index=True)
+
+# Salvar o DataFrame combinado em um novo arquivo CSV
+combined_df.to_csv("c:\\Users\\aclarari\\Desktop\\base_historica.csv", index=False)
